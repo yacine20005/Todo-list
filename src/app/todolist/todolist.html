@@ -11,9 +11,4 @@
   }
 </ul>
 
-<input
-  type="text"
-  [(ngModel)]="newTaskLabel"
-  placeholder="Add a new task"
-  (keydown.enter)="addTask()"
-/>
+<app-todo-form (createTodo)="addTask($event)"></app-todo-form>

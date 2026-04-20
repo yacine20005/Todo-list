@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+// import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(),
+    // provideHttpClient(withFetch()),
     provideRouter(routes), provideClientHydration(withEventReplay()),
     providePrimeNG({
             theme: {

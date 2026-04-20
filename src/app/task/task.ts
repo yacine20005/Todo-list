@@ -1,5 +1,5 @@
 import { Component, inject, input, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ModelTask } from '../model/ModelTask';
 import { MessageService } from 'primeng/api';
 import { CustomDatePipe } from '../custom-date.pipe';
@@ -43,10 +43,23 @@ export class Task {
   }
 
   public toggleEditMode() {
+    if (!this.toggleEdit) {
+      this.editLabel = this.task().label;
+    }
+
     this.toggleEdit = !this.toggleEdit;
   }
 
-  public edit(newLabel: string) {
+  public edit(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
+    const newLabel = this.editLabel.trim();
+    if (!newLabel) {
+      return;
+    }
+
     this.toggleEdit = !this.toggleEdit;
     this.editEvent.emit(newLabel);
     this.messageService.add({

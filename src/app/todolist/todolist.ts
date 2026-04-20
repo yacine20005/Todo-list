@@ -1,13 +1,13 @@
 import { Component, signal, WritableSignal, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { ModelTask } from '../model/ModelTask';
 import { Task } from '../task/task';
 import { MessageService } from 'primeng/api';
 import { TodoService } from '../services/todo.service';
+import { TodoForm } from '../todo-form/todo-form';
 
 @Component({
   selector: 'app-todolist',
-  imports: [FormsModule, Task],
+  imports: [Task, TodoForm],
   templateUrl: './todolist.html',
   styleUrl: './todolist.css',
 })
@@ -17,8 +17,6 @@ export class Todolist implements OnInit {
   private todoService = inject(TodoService);
 
   public tasks: WritableSignal<ModelTask[]> = signal([]);
-
-  public newTaskLabel = '';
 
   ngOnInit() {
     this.refreshTodos();
@@ -35,37 +33,36 @@ export class Todolist implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Update failed',
-          detail: 'Impossible de mettre a jour la tache',
+          detail: 'Unable to update the task',
           life: 3000
         });
       }
     });
   }
 
-  public addTask() {
-    const label = this.newTaskLabel.trim();
-    if (!label) {
+  public addTask(label: string) {
+    const trimmedLabel = label.trim();
+    if (!trimmedLabel) {
       return;
     }
 
-    this.todoService.createTodo(label).subscribe({
+    this.todoService.createTodo(trimmedLabel).subscribe({
       next: (saved) => {
         if (!saved) {
           this.messageService.add({
             severity: 'error',
             summary: 'Create failed',
-            detail: 'Impossible de creer la tache',
+            detail: 'Unable to create the task',
             life: 3000
           });
           return;
         }
 
         this.refreshTodos();
-        this.newTaskLabel = '';
         this.messageService.add({
           severity: 'success',
           summary: 'Task added',
-          detail: `"${label}" has been added to the list`,
+          detail: `"${trimmedLabel}" has been added to the list`,
           life: 3000
         });
       }
@@ -88,7 +85,7 @@ export class Todolist implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Edit failed',
-          detail: 'Impossible de modifier la tache',
+          detail: 'Unable to edit the task',
           life: 3000
         });
       }
@@ -103,7 +100,7 @@ export class Todolist implements OnInit {
           this.messageService.add({
             severity: 'warn',
             summary: 'Task deleted',
-            detail: 'La tache a bien ete supprimee',
+            detail: 'The task has been deleted',
             life: 3000
           });
           return;
@@ -112,7 +109,7 @@ export class Todolist implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Delete failed',
-          detail: 'Impossible de supprimer la tache',
+          detail: 'Unable to delete the task',
           life: 3000
         });
       }
@@ -126,7 +123,7 @@ export class Todolist implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Load failed',
-          detail: 'Impossible de charger les taches',
+          detail: 'Unable to load the tasks',
           life: 3000
         });
       }

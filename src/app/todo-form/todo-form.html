@@ -1,0 +1,35 @@
+<form #todoForm="ngForm" (ngSubmit)="submit(todoForm)">
+  <div class="input-row">
+    <input
+      type="text"
+      name="label"
+      [(ngModel)]="label"
+      #labelModel="ngModel"
+      required
+      minlength="4"
+      maxlength="20"
+      pattern="[a-zA-Z0-9 ]*"
+      placeholder="Add a new task"
+      [class.input-invalid]="labelModel.invalid && (labelModel.touched || todoForm.submitted)"
+      [class.input-valid]="labelModel.valid && (labelModel.touched || todoForm.submitted)"
+      aria-describedby="label-char-count label-error"
+    />
+    <span id="label-char-count" class="char-count">{{ label.length }}/20</span>
+  </div>
+
+  @if (labelModel.errors && (labelModel.touched || todoForm.submitted)) {
+    <p id="label-error" class="error-text" role="alert" aria-live="polite">
+      @if (labelModel.errors['required']) {
+        this field is required
+      } @else if (labelModel.errors['pattern']) {
+        this field can only contain letters, numbers and spaces
+      } @else if (labelModel.errors['maxlength']) {
+        this field exceeds the maximum number of allowed characters
+      } @else if (labelModel.errors['minlength']) {
+        this field does not meet the minimum length requirement
+      }
+    </p>
+  }
+
+  <button type="submit" [disabled]="todoForm.invalid">Add task</button>
+</form>

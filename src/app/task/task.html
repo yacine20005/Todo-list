@@ -1,22 +1,52 @@
 @if (task().done) {
   <li class="line-over-text" (click)="toggleDone()">
-    {{ task().label }} - Finished (created: {{ task().creationDate | customDate:true }})
+    {{ task().label }} - Finished (created: {{ task().creationDate | customDate: true }})
   </li>
-  @if (toggleEdit) {
-    <input type="text" 
-    [(ngModel)]="editLabel" 
-    (keydown.enter)="edit(editLabel)" />
-  }
 } @else {
   <li (click)="toggleDone()">
-    {{ task().label }} - Not finished (created: {{ task().creationDate | customDate:true }})
+    {{ task().label }} - Not finished (created: {{ task().creationDate | customDate: true }})
   </li>
-  @if (toggleEdit) {
-    <input type="text" 
-    [(ngModel)]="editLabel" 
-    (keydown.enter)="edit(editLabel)" />
-  }
 }
+
+@if (toggleEdit) {
+  <form #editForm="ngForm" (ngSubmit)="edit(editForm)" class="edit-form">
+    <div class="input-row">
+      <input
+        type="text"
+        name="editLabel"
+        [(ngModel)]="editLabel"
+        #editLabelModel="ngModel"
+        required
+        minlength="4"
+        maxlength="20"
+        pattern="[a-zA-Z0-9 ]*"
+        [class.input-invalid]="
+          editLabelModel.invalid && (editLabelModel.touched || editForm.submitted)
+        "
+        [class.input-valid]="editLabelModel.valid && (editLabelModel.touched || editForm.submitted)"
+        aria-describedby="edit-char-count-{{ task().id }} edit-error-{{ task().id }}"
+      />
+      <span id="edit-char-count-{{ task().id }}" class="char-count">{{ editLabel.length }}/20</span>
+    </div>
+
+    @if (editLabelModel.errors && (editLabelModel.touched || editForm.submitted)) {
+      <p id="edit-error-{{ task().id }}" class="error-text" role="alert" aria-live="polite">
+        @if (editLabelModel.errors['required']) {
+          this field is required
+        } @else if (editLabelModel.errors['pattern']) {
+          this field can only contain letters, numbers and spaces
+        } @else if (editLabelModel.errors['maxlength']) {
+          this field exceeds the maximum number of allowed characters
+        } @else if (editLabelModel.errors['minlength']) {
+          this field does not meet the minimum length requirement
+        }
+      </p>
+    }
+
+    <button type="submit" [disabled]="editForm.invalid">Save</button>
+  </form>
+}
+
 @if (!toggleEdit) {
   <button (click)="toggleEditMode()">Edit</button>
   <button (click)="deleteTask()">X</button>
