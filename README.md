@@ -1,59 +1,81 @@
-# Todolist
+# Angular Todo List - University Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+This repository gathers practical work sessions (TPs) completed during the **Angular course at Universite Gustave Eiffel**.
 
-## Development server
+It showcases my ability to design and build a modern front-end application with real API interactions, clean component architecture, and user-focused feedback.
 
-To start a local development server, run:
+## Learning Outcomes
 
-```bash
-ng serve
-```
+- Solid Angular fundamentals (components, services, data binding, pipes, forms)
+- Real-world CRUD integration with a remote REST API
+- Reusable component design and event-driven communication
+- Attention to UX through notifications and immediate interaction feedback
+- Ability to write and maintain testable code in a structured project
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Features
 
-## Code scaffolding
+- Add a task
+- Edit task labels
+- Mark tasks as done / not done
+- Delete tasks
+- Display creation dates using a custom date pipe
+- Show contextual toast messages for success, info, warning, and error states
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Tech Stack
 
-```bash
-ng generate component component-name
-```
+- **Framework:** Angular 21
+- **Language:** TypeScript
+- **UI Libraries:** PrimeNG, Materialize CSS
+- **Reactive Programming:** RxJS
+- **API:** REST endpoint (CRUD operations)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Architecture Overview
 
-```bash
-ng generate --help
-```
+- `src/app/todolist/`: main feature component that manages task collection and user actions
+- `src/app/task/`: reusable task item component with edit/toggle/delete events
+- `src/app/services/todo.service.ts`: API communication layer (GET, POST, PUT, DELETE)
+- `src/app/custom-date.pipe.ts`: presentation formatting for task dates
+- `src/app/model/ModelTask.ts`: shared task data contract
 
-## Building
+## Getting Started
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### 1. Install dependencies
 
 ```bash
-ng e2e
+npm install
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 2. Start the development server
 
-## Additional Resources
+```bash
+npm start
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Then open:
+
+`http://localhost:4200/`
+
+### 3. Run tests
+
+```bash
+npm test
+```
+
+### 4. Build for production
+
+```bash
+npm run build
+```
+
+## Scripts
+
+- `npm start` - Run the Angular dev server
+- `npm test` - Execute unit tests
+- `npm run build` - Build application bundles
+- `npm run watch` - Build in watch mode (development)
+
+## Academic Context
+
+This project was developed as part of multiple supervised practical sessions (TPs) in the Angular curriculum at **Universite Gustave Eiffel**.
+
+The objective was not only to make a working app, but also to apply best practices in component organization, service abstraction, and maintainable front-end development.
