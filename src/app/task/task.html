@@ -1,0 +1,23 @@
+@if (task().done) {
+  <li class="line-over-text" (click)="toggleDone()">
+    {{ task().label }} - Finished (created: {{ task().creationDate | customDate:true }})
+  </li>
+  @if (toggleEdit) {
+    <input type="text" 
+    [(ngModel)]="editLabel" 
+    (keydown.enter)="edit(editLabel)" />
+  }
+} @else {
+  <li (click)="toggleDone()">
+    {{ task().label }} - Not finished (created: {{ task().creationDate | customDate:true }})
+  </li>
+  @if (toggleEdit) {
+    <input type="text" 
+    [(ngModel)]="editLabel" 
+    (keydown.enter)="edit(editLabel)" />
+  }
+}
+@if (!toggleEdit) {
+  <button (click)="toggleEditMode()">Edit</button>
+  <button (click)="deleteTask()">X</button>
+}

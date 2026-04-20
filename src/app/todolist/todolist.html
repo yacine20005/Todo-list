@@ -1,0 +1,19 @@
+<h2>Todolist</h2>
+
+<ul>
+  @for (task of tasks(); track task.id) {
+    <app-task
+      [task]="task"
+      (toggleEvent)="toggle(task)"
+      (editEvent)="edit(task, $event)"
+      (deleteEvent)="delete($event)"
+    ></app-task>
+  }
+</ul>
+
+<input
+  type="text"
+  [(ngModel)]="newTaskLabel"
+  placeholder="Add a new task"
+  (keydown.enter)="addTask()"
+/>
